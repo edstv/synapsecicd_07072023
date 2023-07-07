@@ -13,7 +13,7 @@ on:
 env:
       SQL_SERVER_NAME: ${syn01-prod-ondemand.sql.azuresynapse.net}
       CONNECTION_STRING: ${Server=tcp:syn01-dev-ondemand.sql.azuresynapse.net,1433;Database=synprod01;User ID=sqladminuser;Password=sql!12345;Encrypt=true;TrustServerCertificate=false;Connection Timeout=100;}
-      WORKING_DIRECTORY: DBADirectory
+      WORKING_DIRECTORY: C:\Users\salendra.d\source\repos\synapsecicd_07072023
       CLIENT_ID: ${d7b6a13c-fa42-4ddb-ad02-dc94970e25a2}
       TENANT_ID: ${865cc515-a530-4538-8ef8-072b7b2be759}
       RESOURCE_GROUP: ${Team_Practise}
@@ -36,7 +36,7 @@ jobs:
       
 
       - name: Build DACPAC
-        run: msbuild 'synapsecicd_07072023/synapsecicd_07072023.sln' /p:TargetFrameworkVersion=v4.7.1 /p:DSP=Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider
+        run: msbuild 'C:\Users\salendra.d\source\repos\synapsecicd_07072023\synapsecicd_07072023.sln' /p:TargetFrameworkVersion=v4.7.1 /p:DSP=Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3.1.2
