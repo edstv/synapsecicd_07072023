@@ -8,7 +8,7 @@ on:
         type: environment
   push:
     branches:
-      - main 
+      - master
   
 env:
       SQL_SERVER_NAME: ${syn01-prod-ondemand.sql.azuresynapse.net}
