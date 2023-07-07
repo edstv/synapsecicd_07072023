@@ -1,0 +1,25 @@
+jobs:
+  build :
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Navigate to Workspace
+        run: |
+          cd DBADirectory
+          pwd
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+      
+
+      - name: Build DACPAC
+        run: msbuild 'DBADirectory/DBADirectory.sln' /p:ExtractAllTableData=true /p:IgnorePermissions=True /p:IgnoreUserLoginMappings=True
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name:  SQLDB
+          path: ${{ github.workspace }}/DBADirectory/bin/debug/
