@@ -28,7 +28,7 @@ jobs:
 
       - name: Navigate to Workspace
         run: |
-          cd synapsecicd_07072023
+          cd C:\Users\salendra.d\source\repos\synapsecicd_07072023
           pwd
 
       - name: Setup MSBuild
