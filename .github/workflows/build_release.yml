@@ -28,7 +28,7 @@ jobs:
       # create dacpac using MSBUILD
       - name: Build Database project
         run: |
-         msbuild.exe ${{github.workspace}}/synapsecicd_07072023.sqlproj /p:Configuration=Release
+         msbuild.exe ${{ github.workspace }}/synapsecicd_07072023/synapsecicd_07072023.sqlproj /p:Configuration=Release
       # Publish artifact
       - uses: actions/upload-artifact@v3.1.2
         with:
