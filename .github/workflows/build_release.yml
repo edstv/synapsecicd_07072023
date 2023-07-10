@@ -28,7 +28,7 @@ jobs:
       # create dacpac using MSBUILD
       - name: Build Database project
         run: |
-          C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64.msbuild.exe synapsecicd_07072023.sqlproj /p:Configuration=Release
+         & 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64.msbuild.exe' synapsecicd_07072023.sqlproj /p:Configuration=Release
       # Publish artifact
       - uses: actions/upload-artifact@v3.1.2
         with:
