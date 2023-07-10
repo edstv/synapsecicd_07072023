@@ -33,7 +33,7 @@ jobs:
       - uses: actions/upload-artifact@v3.1.2
         with:
           name: AzureSQLDB
-          path: ${{ github.workspace }}/bin/Release/ 
+          path: ${{ github.workspace }}\bin\Release\ 
 
   # Deploy dacpac job
   DeployDacpac:
