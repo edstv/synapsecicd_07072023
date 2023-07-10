@@ -57,6 +57,7 @@ jobs:
       - uses: azure/login@v1.4.6
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
           
       # Installs dacpac
       # For this to work you have a secret specified, default in my repo is blank
