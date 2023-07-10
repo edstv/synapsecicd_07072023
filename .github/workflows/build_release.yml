@@ -4,7 +4,7 @@
 #   AZURESQLDB_CONNECTION_STRING - Connestion string to your Azure SQL Database
 name: Update Azure SQL database
 
-#Sets the trigger to update when update is pushed to a keyvault-feature branch
+#Sets the trigger to update when update is pushed to a keyvault-feature
 on:
   push:
     branches: 
