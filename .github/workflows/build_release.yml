@@ -56,7 +56,7 @@ jobs:
  
 
       - name: Install Az PowerShell module
-        run: if('${{ inputs.skipAzModuleInstallation }}' -ne 'true') { Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force }
+        run: if('${{ inputs.skipAzModuleInstallation }}' -ne 'true') { Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force -AllowClobber}
         shell: pwsh
         
           
