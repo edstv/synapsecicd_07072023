@@ -26,4 +26,5 @@ jobs:
       # Run migration-based scripts
       - name: Run migration-based scripts
         run: |
-          Install-DBOScript -ScriptPath Security -sqlinstance syn01-prod-ondemand.sql.azuresynapse.net -Database synprod01 -UserName sqladminuser -Password 'sql!12345' -SchemaVersionTable $null
+          $SecurePw=ConvertTo-SecureString ${{ secrets.Pw }} –asplaintext –force
+          Install-DBOScript -ScriptPath Security -sqlinstance syn01-prod-ondemand.sql.azuresynapse.net -Database synprod01 -UserName sqladminuser -Password $SecurePw -SchemaVersionTable $null
