@@ -17,10 +17,11 @@
 # Uncomment the below to use them
 # variables:
 # - group: AzureSynapseServerlessKeyVault
-# - group: AzureSynapseServerlessNonSensitive
-
-trigger:
-- master
+# - group: AzureSynapseServerlessNonSensitive#Sets the trigger to update when update is pushed to a keyvault-feature 
+on:
+  push:
+    branches: 
+      - master
 
 pool: 
   vmImage: 'windows-latest'
