@@ -1,6 +1,6 @@
 name: Update Azure Synapse Serverless SQL Pool
 
-# Sets the trigger to update when update is pushed to main branch
+# Sets the trigger to update when update is pushed to master branch
 on:
   push:
     branches: 
