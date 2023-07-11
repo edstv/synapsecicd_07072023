@@ -1,7 +1,7 @@
 # Workflow which shows how to create a dacpac based on a database project and deploy using sql-action v2
 # For this to work you must create two secrets
 #   AZURE_CREDENTIALS - Which are credential you use for the Azure Login action as per https://bit.ly/3KjPEc4
-#   AZURESQLDB_CONNECTION_STRING - Connestion string to your Azure SQL Database
+#   AZURESQLDB_CONNECTION_STRING - Connestion string to your Azure SQL Database 
 name: Update Azure SQL database
 
 #Sets the trigger to update when update is pushed to a keyvault-feature 
