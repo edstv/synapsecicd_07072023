@@ -1,2 +1,2 @@
-﻿IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'stage')
-     CREATE SCHEMA [stage]
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'stage')
+exec ('CREATE SCHEMA [STAGE]')
