@@ -1,3 +1,2 @@
-﻿CREATE SCHEMA [stage]
-    AUTHORIZATION [dbo];
-
+﻿IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'stage')
+     CREATE SCHEMA [stage]
