@@ -22,9 +22,14 @@ on:
   push:
     branches: 
       - main
+      
+jobs:
 
-pool: 
-  vmImage: 'windows-latest'
+  # Job to build and publish the dacpac
+  ExtractandPush:
+    # Easier to use Github-hosted runner if updating in GitHub
+    # windows-2019 image works better at the moment
+    runs-on: windows-latest
 
 stages:
 
