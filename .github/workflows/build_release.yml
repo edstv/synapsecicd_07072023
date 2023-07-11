@@ -8,7 +8,7 @@ name: Update Azure SQL database
 on:
   push:
     branches: 
-      - master
+      - main
 
 jobs:
 
