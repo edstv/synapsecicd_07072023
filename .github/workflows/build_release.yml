@@ -52,6 +52,11 @@ jobs:
         with:
           name: AzureSQLDB
           
+          
+          name: Install Az PowerShell module
+          run: if('${{ inputs.skipAzModuleInstallation }}' -ne 'true') { Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force }
+          shell: pwsh
+          
       # Login using Azure credentials 
       # Required to add a temporary firewall rule for the runner
       - uses: azure/login@v1
