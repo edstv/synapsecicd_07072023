@@ -54,7 +54,7 @@ jobs:
           
       # Login using Azure credentials 
       # Required to add a temporary firewall rule for the runner
-      - uses: azure/login@v1.4.6
+      - uses: azure/login@1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
