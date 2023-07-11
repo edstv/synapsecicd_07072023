@@ -1,54 +1,29 @@
-# Sample of how to deploy to an Azure Synapse Serverless SQL Pool
-# You can use a self-hosted agent installed locally for this to work
-# You can also use a Microsoft-hosted agent for the Azure services
+name: Update Azure Synapse Serverless SQL Pool
 
-# For this pipeline you also need to setup the below pipeline variables
-  # sqlinstance - Your Serverless SQL Pool endpoint 
-    #(the one that ends with -ondemand)
-  # database - The database in the SQL Pool you want the update deployed to
-    # Note it has to exist BEFORE this the scripts are run
-  # UserName - User name to connect to the Serverless SQL Pool endpoint
-    # try and keep this secret
-  # Pw - Password of above user, MUST be wrapped in single quotes for it to work.
-    # For example, 'SecretPW123'
-    # Definitely keep this one secret
-
-# Optional variable groups you can use
-# Uncomment the below to use them
-# variables:
-# - group: AzureSynapseServerlessKeyVault
-# - group: AzureSynapseServerlessNonSensitive#Sets the trigger to update when update is pushed to a keyvault-feature 
+# Sets the trigger to update when update is pushed to main branch
 on:
   push:
     branches: 
       - master
-      
+
 jobs:
 
-  # Job to build and publish the dacpac
-  ExtractandPush:
-    # Easier to use Github-hosted runner if updating in GitHub
-    # windows-2019 image works better at the moment
+  # Job to install the scripts
+  ServerlessPool1:
+    # Easier to use GitHub-hosted runner if updating in GitHub
     runs-on: windows-latest
 
-stages:
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Note that I am using latest version of action
+      - uses: actions/checkout@v2.4.0 
 
-- stage: RunScripts
-  displayName: 'Run Migration-based scripts'
-
-  jobs:
-    - job: 'RunScripts'
-      displayName: 'Run Migration-based scripts'
-      steps:
-      - task: PowerShell@2
-        displayName: 'Install dbops PoSh Module'
-        inputs:
-          targetType: 'inline'
-          script: 'Install-Module -Name dbops -Force -PassThru'
-
-      - task: PowerShell@2
-        displayName: 'Run migration-based scripts'
-        inputs:
-          targetType: 'inline'
-          script: |
-            Install-DBOScript -ScriptPath Security -sqlinstance syn01-prod-ondemand.sql.azuresynapse.net -Database synprod01 -UserName sqladminuser -Password 'sql!123456' -SchemaVersionTable $null
+      # install dbops PowerShell module
+      - name: Install dbops module
+        run: 'Install-Module -Name dbops -Force -PassThru'
+        
+      # Run migration-based scripts
+      - name: Run migration-based scripts
+        run: |
+          Install-DBOScript -ScriptPath Security -sqlinstance syn01-prod-ondemand.sql.azuresynapse.net -Database synprod01 -UserName sqladminuser -Password 'sql!12345' -SchemaVersionTable $null
