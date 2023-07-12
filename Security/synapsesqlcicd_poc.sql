@@ -10,10 +10,10 @@ GO
 IF NOT EXISTS (
 		SELECT *
 		FROM sys.external_data_sources
-		WHERE name = 'rawpq_syn01datalakestorage_dfs_core_windows_net'
+		WHERE name = 'rawpq_syn02datalakestorage_dfs_core_windows_net'
 		)
-	CREATE EXTERNAL DATA SOURCE [rawpq_syn01datalakestorage_dfs_core_windows_net]
-		WITH (LOCATION = 'abfss://rawpq@syn01datalakestorage.dfs.core.windows.net')
+	CREATE EXTERNAL DATA SOURCE [rawpq_syn02datalakestorage_dfs_core_windows_net]
+		WITH (LOCATION = 'abfss://rawpq@syn02datalakestorage.dfs.core.windows.net')
 GO
 
 IF NOT EXISTS (
@@ -37,7 +37,7 @@ IF NOT EXISTS (
 		)
 		WITH (
 				LOCATION = 'aa/bb/A4LERF_Incoterms.parquet'
-				,DATA_SOURCE = [rawpq_syn01datalakestorage_dfs_core_windows_net]
+				,DATA_SOURCE = [rawpq_syn02datalakestorage_dfs_core_windows_net]
 				,FILE_FORMAT = [SynapseParquetFormat]
 				)
 GO
@@ -53,7 +53,7 @@ IF NOT EXISTS (
 		,[IncotermId]
 		,getdate() AS datenow
 		,'abc' AS test_string
-	FROM OPENROWSET(BULK 'https://syn01datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet', FORMAT = 'PARQUET') AS result
+	FROM OPENROWSET(BULK 'https://syn02datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet', FORMAT = 'PARQUET') AS result
 
 	SELECT *
 	FROM sys.VIEWS
