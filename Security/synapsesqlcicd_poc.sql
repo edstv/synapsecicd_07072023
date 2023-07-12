@@ -13,7 +13,8 @@ IF NOT EXISTS (
 		WHERE name = 'rawpq_syn02datalakestorage_dfs_core_windows_net'
 		)
 	CREATE EXTERNAL DATA SOURCE [rawpq_syn02datalakestorage_dfs_core_windows_net]
-		WITH (LOCATION = 'abfss://rawpq@syn02datalakestorage.dfs.core.windows.net')
+		WITH (LOCATION = 'abfss://rawpq@syn02datalakestorage.dfs.core.windows.net',
+		CREDENTIAL = [WorkspaceIdentity])
 GO
 
 IF NOT EXISTS (
