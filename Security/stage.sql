@@ -1,2 +1,2 @@
-IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'stage')
-exec ('CREATE SCHEMA [STAGE]')
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'raw')
+exec ('CREATE SCHEMA [raw]')
