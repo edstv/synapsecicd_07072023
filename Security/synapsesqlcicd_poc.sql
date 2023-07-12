@@ -1,36 +1,59 @@
-IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') 
-CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] WITH (FORMAT_TYPE = DELIMITEDTEXT, FORMAT_OPTIONS (FIELD_TERMINATOR = N',', FIRST_ROW = 2, USE_TYPE_DEFAULT = False))
+IF NOT EXISTS (
+		SELECT *
+		FROM sys.external_file_formats
+		WHERE name = 'SynapseParquetFormat'
+		)
+	CREATE EXTERNAL FILE FORMAT [SynapseParquetFormat]
+		WITH (FORMAT_TYPE = PARQUET)
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'raw_syn01datalakestorage_dfs_core_windows_net') 
-	CREATE EXTERNAL DATA SOURCE [raw_syn01datalakestorage_dfs_core_windows_net] 
-	WITH (
-		LOCATION = 'abfss://raw@syn02datalakestorage.dfs.core.windows.net' 
-	)
+IF NOT EXISTS (
+		SELECT *
+		FROM sys.external_data_sources
+		WHERE name = 'rawpq_syn01datalakestorage_dfs_core_windows_net'
+		)
+	CREATE EXTERNAL DATA SOURCE [rawpq_syn01datalakestorage_dfs_core_windows_net]
+		WITH (LOCATION = 'abfss://rawpq@syn01datalakestorage.dfs.core.windows.net')
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.external_tables WHERE name = 'country_response_ext')
-CREATE EXTERNAL TABLE [stage].[country_response_ext]
-(
-    [Country] [nvarchar](4000),
-    [Response_measure] [nvarchar](4000),
-    [change] [bigint],
-    [date_start] [date],
-    [date_end] [nvarchar](4000)
-)
-WITH (DATA_SOURCE = [raw_syn01datalakestorage_dfs_core_windows_net],LOCATION = N'raw/country_response.csv',FILE_FORMAT = [SynapseDelimitedTextFormat])
+IF NOT EXISTS (
+		SELECT *
+		FROM sys.schemas
+		WHERE name = 'raw'
+		)
+	EXEC ('CREATE SCHEMA [raw]')
+
+IF NOT EXISTS (
+		SELECT *
+		FROM sys.external_tables
+		WHERE name = 'incoterms'
+		)
+	CREATE EXTERNAL TABLE raw.incoterms (
+		[CompanyId] INT
+		,[IncotermId] NVARCHAR(4000)
+		,[IncotermDescription] NVARCHAR(4000)
+		,[RawInsertedTimestamp] NVARCHAR(4000)
+		,[IsTableSource] NVARCHAR(4000)
+		)
+		WITH (
+				LOCATION = 'aa/bb/A4LERF_Incoterms.parquet'
+				,DATA_SOURCE = [rawpq_syn01datalakestorage_dfs_core_windows_net]
+				,FILE_FORMAT = [SynapseParquetFormat]
+				)
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.external_tables WHERE name = 'hospital_admission_ext')
-CREATE EXTERNAL TABLE [stage].[hospital_admission_ext]
-(
-    [country] [nvarchar](4000),
-    [indicator] [nvarchar](4000),
-    [date] [date],
-    [year_week] [nvarchar](4000),
-    [value] [bigint],
-    [source] [nvarchar](4000),
-    [url] [nvarchar](4000)
-)
-WITH (DATA_SOURCE = [raw_syn01datalakestorage_dfs_core_windows_net],LOCATION = N'raw/hospital_admissions.csv',FILE_FORMAT = [SynapseDelimitedTextFormat])
-GO
+IF NOT EXISTS (
+		SELECT *
+		FROM sys.VIEWS
+		WHERE name = 'vw_incoterms'
+		)
+	CREATE VIEW raw.vw_incoterms
+	AS
+	SELECT [CompanyId]
+		,[IncotermId]
+		,getdate() AS datenow
+		,'abc' AS test_string
+	FROM OPENROWSET(BULK 'https://syn01datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet', FORMAT = 'PARQUET') AS result
+
+	SELECT *
+	FROM sys.VIEWS
