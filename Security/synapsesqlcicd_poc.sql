@@ -28,7 +28,7 @@ IF NOT EXISTS (
 		FROM sys.external_tables
 		WHERE name = 'incoterms'
 		)
-	CREATE EXTERNAL TABLE raw.incoterms (
+	CREATE EXTERNAL TABLE [raw].[incoterms] (
 		[CompanyId] INT
 		,[IncotermId] NVARCHAR(4000)
 		,[IncotermDescription] NVARCHAR(4000)
@@ -47,7 +47,7 @@ IF NOT EXISTS (
 		FROM sys.VIEWS
 		WHERE name = 'vw_incoterms'
 		)
-	CREATE VIEW raw.vw_incoterms
+	CREATE VIEW [raw].[vw_incoterms]
 	AS
 	SELECT [CompanyId]
 		,[IncotermId]
