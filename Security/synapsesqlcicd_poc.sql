@@ -44,6 +44,13 @@ GO
 
 IF NOT EXISTS (
 		SELECT *
+		FROM sys.schemas
+		WHERE name = 'raw'
+		)
+	EXEC ('CREATE SCHEMA [raw]')
+
+IF NOT EXISTS (
+		SELECT *
 		FROM sys.VIEWS
 		WHERE name = 'vw_incoterms'
 		)
