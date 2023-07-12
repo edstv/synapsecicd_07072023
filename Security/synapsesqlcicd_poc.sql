@@ -50,7 +50,7 @@ SELECT [CompanyId]
     ,[IncotermId]
     ,getdate() AS datenow
     ,''abc'' AS test_string
-FROM OPENROWSET(BULK ''https://syn02datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet'', FORMAT = ''PARQUET'') AS result')
+FROM OPENROWSET(BULK ''/aa/bb/A4LERF_Incoterms.parquet'', FORMAT = ''PARQUET'',DATA_SOURCE = ''rawpq_syn02datalakestorage_dfs_core_windows_net'') AS result')
 GO
 
 
