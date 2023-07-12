@@ -42,7 +42,7 @@ IF NOT EXISTS (
 				)
 GO
 
-IF NOT EXISTS (
+/*IF NOT EXISTS (
 		SELECT *
 		FROM sys.VIEWS
 		WHERE name = 'vw_incoterms'
@@ -56,4 +56,4 @@ IF NOT EXISTS (
 	FROM OPENROWSET(BULK 'https://syn02datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet', FORMAT = 'PARQUET') AS result
 
 	SELECT *
-	FROM sys.VIEWS
+	FROM sys.VIEWS*/
