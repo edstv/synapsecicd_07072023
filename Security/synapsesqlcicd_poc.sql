@@ -18,13 +18,6 @@ GO
 
 IF NOT EXISTS (
 		SELECT *
-		FROM sys.schemas
-		WHERE name = 'raw'
-		)
-	EXEC ('CREATE SCHEMA [raw]')
-
-IF NOT EXISTS (
-		SELECT *
 		FROM sys.external_tables
 		WHERE name = 'incoterms'
 		)
@@ -49,16 +42,23 @@ IF NOT EXISTS (
 		)
 	EXEC ('CREATE SCHEMA [raw]')
 
-IF NOT EXISTS (
-		SELECT *
-		FROM sys.VIEWS
-		WHERE name = 'vw_incoterms'
-		)
-	CREATE VIEW [raw].[vw_incoterms]
-	AS
-	SELECT [CompanyId]
-		,[IncotermId]
-		,getdate() AS datenow
-		,'abc' AS test_string
-	FROM OPENROWSET(BULK 'https://syn02datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet', FORMAT = 'PARQUET') AS result
+IF NOT EXISTS (SELECT * FROM sys.VIEWS WHERE name = 'vw_incoterms' and SCHEMA_ID = 6)
+EXEC('CREATE VIEW raw.vw_incoterms
+AS
+SELECT [CompanyId]
+    ,[IncotermId]
+    ,getdate() AS datenow
+    ,''abc'' AS test_string
+FROM OPENROWSET(BULK ''https://syn02datalakestorage.dfs.core.windows.net/rawpq/aa/bb/A4LERF_Incoterms.parquet'', FORMAT = ''PARQUET'') AS result')
 GO
+
+
+if not exists(SELECT * 
+  FROM INFORMATION_SCHEMA.ROUTINES
+ WHERE ROUTINE_TYPE = 'FUNCTION' and SPECIFIC_NAME = 'fn_CompanyId4Actuals')
+EXEC('CREATE FUNCTION [raw].[fn_CompanyId4Actuals] (@switch NVARCHAR(3))
+RETURNS TABLE
+AS
+RETURN (
+		SELECT 30 AS CompanyId
+		)')
